@@ -44,4 +44,28 @@ app.get('/users', (req, res) => {
   });
 });
 
+app.get('/tickets', (req, res) => {
+  conn.query('SELECT * FROM tickets', (err, rows) => {
+    if (err) {
+      res.json({
+        message: 'error2',
+      });
+    };
+    res.json({
+      tickets:
+      (rows.map((listTicket) => {
+        return {
+          id: listTicket.id,
+          reporter: listTicket.reporter,
+          manufacturer: listTicket.manufacturer,
+          serial_number : listTicket.serial_number,
+          description : listTicket.description,
+          reported_at : listTicket.reported_at,
+        }
+      }))
+    });
+  });
+  
+});
+
 app.listen(PORT);
