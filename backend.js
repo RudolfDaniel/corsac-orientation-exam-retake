@@ -45,10 +45,74 @@ app.get('/users', (req, res) => {
 });
 
 app.get('/tickets', (req, res) => {
-  conn.query('SELECT * FROM tickets', (err, rows) => {
+  if (req.query.manufacturer !== '' && req.query.reporter !== undefined) {
+    conn.query(`SELECT * FROM tickets WHERE manufacturer = "${req.query.manufacturer}" AND reporter = ${req.query.reporter}`, (err, rows) => {
+      if (err) {
+        res.json({
+          message: 'error2',
+        });
+      };
+      res.json({
+        tickets:
+        (rows.map((listTicket) => {
+          return {
+            id: listTicket.id,
+            reporter: listTicket.reporter,
+            manufacturer: listTicket.manufacturer,
+            serial_number : listTicket.serial_number,
+            description : listTicket.description,
+            reported_at : listTicket.reported_at,
+          }
+        }))
+      });
+    })
+  } else if (req.query.manufacturer !== '') {
+    conn.query(`SELECT * FROM tickets WHERE manufacturer = ${req.query.manufacturer}`, (err, rows) => {
+      if (err) {
+        res.json({
+          message: 'error3',
+        });
+      };
+      res.json({
+        tickets:
+        (rows.map((listTicket) => {
+          return {
+            id: listTicket.id,
+            reporter: listTicket.reporter,
+            manufacturer: listTicket.manufacturer,
+            serial_number : listTicket.serial_number,
+            description : listTicket.description,
+            reported_at : listTicket.reported_at,
+          }
+        }))
+      });
+    })
+  } else if (req.query.reporter !== undefined) {
+    conn.query(`SELECT * FROM tickets WHERE reporter = "${req.query.reporter}"`, (err, rows) => {
+      if (err) {
+        res.json({
+          message: 'error4',
+        });
+      };
+      res.json({
+        tickets:
+        (rows.map((listTicket) => {
+          return {
+            id: listTicket.id,
+            reporter: listTicket.reporter,
+            manufacturer: listTicket.manufacturer,
+            serial_number : listTicket.serial_number,
+            description : listTicket.description,
+            reported_at : listTicket.reported_at,
+          }
+        }))
+      });
+    })
+  } else {
+    conn.query('SELECT * FROM tickets', (err, rows) => {
     if (err) {
       res.json({
-        message: 'error2',
+        message: 'error5',
       });
     };
     res.json({
@@ -65,7 +129,7 @@ app.get('/tickets', (req, res) => {
       }))
     });
   });
-  
+}
 });
 
 app.listen(PORT);
