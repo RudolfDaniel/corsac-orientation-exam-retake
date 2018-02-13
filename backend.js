@@ -45,7 +45,7 @@ app.get('/users', (req, res) => {
 });
 
 app.get('/tickets', (req, res) => {
-  /*
+
   if (req.query.manufacturer !== '' && req.query.reporter !== undefined) {
     conn.query(`SELECT * FROM tickets WHERE manufacturer = "${req.query.manufacturer}" AND reporter = ${req.query.reporter}`, (err, rows) => {
       if (err) {
@@ -110,7 +110,7 @@ app.get('/tickets', (req, res) => {
       });
     })
   } else {
-    */
+    
     conn.query('SELECT * FROM tickets', (err, rows) => {
     if (err) {
       res.json({
@@ -131,7 +131,7 @@ app.get('/tickets', (req, res) => {
       }))
     });
   });
-//}
+}
 });
 
 app.post('/tickets', (req, res) => {

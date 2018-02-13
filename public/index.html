@@ -12,7 +12,19 @@
         <a href="tickets.html">Tickets</a>
     </nav>
   <h1>Create new tickets</h1>
-
+  <form>
+      <label for="name">Name</label>
+      <select class="reporter">
+          <option class="selected-size" value="value1" selected></option> 
+      </select>
+      <label for="manufacturer">Manufacturer</label>
+      <input type="text" name="manufacturer" id="manufacturer">
+      <label for="serial_number">Serial number</label>
+      <input type="text" name="serial_number" id="serial_number">
+      <label for="description">Description</label>
+      <input type="text" name="description" id="description">
+      <input type="submit" value="Report">
+    </form>
   <script src="index.js"></script>
 </body>
 </html>
