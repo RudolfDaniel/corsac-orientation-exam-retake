@@ -156,6 +156,19 @@ app.post('/tickets', (req, res) => {
   }
 });
 
+app.delete('/tickets/:id', (req, res) => {
+  //authorizeHTTPheader()
+  //if missing res.status(401)
+  conn.query(`DELETE * FROM tickets WHERE id = ${req.params.id}`, (err, rows) => {
+    if (err) {
+      res.status(500).json({
+        error: 'Error has occured'
+      });
+    }
+    res.status(204);
+  });
+});
+
 function isValidTicket(ticket) {
   if (typeof(ticket.reporter) !== number) {
     return false;
@@ -170,6 +183,13 @@ function isValidTicket(ticket) {
     return false;
   }
   return true;
-}
+};
+
+function authorizeHTTPheader(header) {
+  if (header !== 'voala') {
+    return false;
+  }
+  return true;
+};
 
 app.listen(PORT);
