@@ -132,4 +132,44 @@ app.get('/tickets', (req, res) => {
 }
 });
 
+app.post('/tickets', (req, res) => {
+  const ticket = req.body;
+  if (isValidTicket(ticket)) {
+    let today = new Date();
+    let day = today.getDate();
+    let month = today.getMonth()+1;
+    let year = today.getFullYear();
+    ticket.reported_at = today;
+    conn.query(`INSERT INTO tickets SET ?`, ticket, (err, rows) => {
+      if (err) {
+        res.status(500).json({
+          error: 'Database error has occured!'
+        });
+        return;
+      }
+      res.json({ticket});
+    })
+  } else {
+    res.status(400).json({
+      error: 'Validation failed!',
+    });
+  }
+});
+
+function isValidTicket(ticket) {
+  if (typeof(ticket.reporter) !== number) {
+    return false;
+  }
+  if (ticket.manufacturer === undefined) {
+    return false;
+  }
+  if (ticket.serial_number === undefined) {
+    return false;
+  }
+  if (ticket.description === undefined) {
+    return false;
+  }
+  return true;
+}
+
 app.listen(PORT);
