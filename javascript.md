@@ -188,4 +188,8 @@ Example query:
 
 ### a, What's the difference between Array.prototype.forEach and Array.prototype.map?
 
+Array.prototype.map creates a new array using an existing one, but makes modofication(s) each elements and puts the modified elements into the new array. We need a function to specify the modifications and use it in the map function. ForEach executes the specific function on the existing array and does not create a new one.
+
 ### b, Write an example usage of the map and forEach function.
+
+If we would like to keep the existing array to use it later, but need new version of the modified elements, we should use the map function. If we would like to use just a function on the array, use the forEach function.
